@@ -39,10 +39,6 @@ def start():
     #===本地文件调试===
     # # file = '/maoyan.html'
     # file = '/week01/maoyan.html'
-    # # a_path = os.path.join(path, "b_file/a.txt")
-    # #tree = html.parse(file)
-    # #使用open函数打开文件
-    # # config_path = homepath+"/k8s/kubeconfig.yaml"
     # htmlfile = open(curpath+file, 'r', encoding='utf-8')
     # #读取html的句柄内容
     # htmlhandle = htmlfile.read()
