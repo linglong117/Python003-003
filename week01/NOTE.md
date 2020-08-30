@@ -74,3 +74,16 @@ for tag in tags.find\_all('div', attrs={'class': 'movie-hover-title'})
 猫眼电影网址： https://maoyan.com/films?showType=3
 
 要求：必须使用 Scrapy 框架及其自带的 item pipeline、选择器功能，不允许使用 bs4 进行页面内容的筛选。
+
+
+
+
+https://github.com/Python003-003/Python003-003/issues/1
+https://github.com/linglong117/Python003-003/tree/master/week01
+
+
+#学号: G20200389040094
+#姓名: 谢义龙
+#班级: 1 班
+#小组: 5 组
+#作业&总结链接: https://github.com/linglong117/Python003-003/tree/master/week01
