@@ -9,24 +9,30 @@ import pymysql     # 导入pymysql
 
 class MaoyanmoviePipeline:
 
-    def __init__(self):
-        print("===数据库连接===")
-        self.conn = pymysql.connect(host = 'localhost',
-                       port = 3306,
-                       user = '@smx123',
-                       password = 'pwd123_321',
-                       database = 'smartx_test',
-                       charset = 'utf8mb4'
-                        )
-        # 获得cursor游标对象
-        self.cur = self.conn.cursor()
+    def __init__(self,db_info):
+        # print(f"db->{db_info}")
+        self.db_info = db_info
 
-    # https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            db_info=crawler.settings.get('DBINFO')
+        )
+
     def open_spider(self, spider):
+        # print("===数据库连接===")
+        self.conn = pymysql.connect(host = self.db_info['host'],
+                       port = self.db_info['port'],
+                       user = self.db_info['user'],
+                       password = self.db_info['password'],
+                       database = self.db_info['db'],
+                       charset = self.db_info['charset']
+                        )
         self.file = open('./maoyanmovie2.csv', 'a', encoding='utf-8')
 
     def close_spider(self, spider):
         self.file.close()
+        self.conn.close()
 
     def process_item(self, item, spider):
         mname = item['mname']
@@ -38,14 +44,13 @@ class MaoyanmoviePipeline:
         # with open('./maoyanmovie2.csv', 'a+', encoding='utf-8') as article: article.write(output)
         self.file.write(output)
         try:
+            # 获得cursor游标对象
+            cur = self.conn.cursor()
             sql = "INSERT INTO smartx_test.tbl_maoyan_movie(name,mtype,releasetime) VALUES(%s, %s, %s)"
-            self.cur.execute(sql, (mname, mtype, mdatetime))
+            cur.execute(sql, (mname, mtype, mdatetime))
             self.conn.commit()
+            cur.close()
         except Exception as ex:
             print(f'insert error ex-> {ex}')
-            conn.rollback()
+            self.conn.rollback()
         return item
-    
-    def close_spider(self, spider):
-        self.cur.close()
-        self.conn.close()

@@ -18,7 +18,6 @@ def shimo_request():
     }
 
     s = requests.Session()
-    page_login_url = 'https://shimo.im/login?from=home'
     # 会话对象：在同一个 Session 实例发出的所有请求之间保持 cookie，
     # 期间使用 urllib3 的 connection pooling 功能。
     # 向同一主机发送多个请求，底层的 TCP 连接将会被重用，从而带来显著的性能提升。
@@ -27,12 +26,11 @@ def shimo_request():
         'mobile': '+861368173xxxx',
         'password': 'pwd123321'
     }
-    # pre_login = 'https://accounts.douban.com/passport/login'
-    # pre_resp = s.get(pre_login, headers=headers)
-    # print(f'pre_resp->{pre_resp.text}')
+    pre_login = 'https://shimo.im/login?from=home'
+    pre_resp = s.get(pre_login, headers=headers)
+
     response = s.post(api_login_url,data=form_data,headers=headers,cookies=s.cookies)
     print(f'response->{response}')
-    # print('response->{response.json()}')
 
 
 def shimo_webdriver():
@@ -59,5 +57,5 @@ def shimo_webdriver():
 
 
 if __name__ == '__main__':
-    shimo_webdriver()
-    # shimo_request()
+    # shimo_webdriver()
+    shimo_request()
