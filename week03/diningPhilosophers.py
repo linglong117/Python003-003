@@ -6,7 +6,7 @@ import random
 import time
 import queue
 
-q = queue.Queue(300)
+records = queue.Queue()
 
 '''
 输出列表中的每一个子列表描述了某个哲学家的具体行为，它的格式如下：
@@ -24,7 +24,7 @@ class DiningPhilosophers:
         super(DiningPhilosophers, self).__init__()
         # self.philosopher = philosopher
         self.eatTimes = eatTimes
-        self.records = records
+        # self.records = records
         self.lock = lock
         self.orders = orders
 
@@ -39,55 +39,63 @@ class DiningPhilosophers:
         for i in range(self.eatTimes):
             with self.lock[self.orders[philosopher][0]]:
                 with self.lock[self.orders[philosopher][1]]:
+                    # self.thinking()
                     pickLeftFork()
                     pickRightFork()
                     eat()
                     putLeftFork()
                     putRightFork()
 
+    def thinking(self):
+        print(f"==={self.philosopher}")
+
     def pickLeftFork(self):
-        q.put([self.philosopher, 1, 1])
+        records.put([self.philosopher, 1, 1])
 
     def pickRightFork(self):
-        q.put([self.philosopher, 2, 1])
+        records.put([self.philosopher, 2, 1])
 
     def eat(self):
         time.sleep(random.uniform(1, 3)/1000)
-        q.put([self.philosopher, 0, 3])
+        records.put([self.philosopher, 0, 3])
 
     def putLeftFork(self):
-        q.put([self.philosopher, 1, 2])
+        records.put([self.philosopher, 1, 2])
 
     def putRightFork(self):
-        q.put([self.philosopher, 2, 2])
+        records.put([self.philosopher, 2, 2])
 
-
-# 使用者指定一个进食次数num
 
 if __name__ == "__main__":
 
-    # out records
-    records = queue.Queue()
-    # fork lock
     lock = [threading.Lock() for i in range(5)]
     orders = [sorted([i, (i+1) % 5]) for i in range(5)]
-    # num = input('>>>')
+    # 输入：n = 1 （1<=n<=60，n 表示每个哲学家需要进餐的次数。）
+    # eatTimes = 5
+    eatTimes = input('请输入需要进餐的次数(1<=n<=60)->')
+    try:
+        if int(eatTimes) > 0 and int(eatTimes) <= 60:
+            p1 = DiningPhilosophers(int(eatTimes), lock,orders, records)
 
-    eatTimes = 3
-    p1 = DiningPhilosophers(int(eatTimes), lock,orders, records)
+            philosophers = []
+            for i in range(5):
+                philosophers.append(threading.Thread(target=p1.wantsToEat, args=[i, p1.pickLeftFork,
+                                                                                p1.pickRightFork, p1.eat, p1.putLeftFork, p1.putRightFork]))
 
-    philosophers = []
-    for i in range(5):
-        philosophers.append(threading.Thread(target=p1.wantsToEat, args=[i, p1.pickLeftFork,
-                                                                         p1.pickRightFork, p1.eat, p1.putLeftFork, p1.putRightFork]))
+            [p.start() for p in philosophers]
+            [p.join() for p in philosophers]
 
-    [p.start() for p in philosophers]
-    [p.join() for p in philosophers]
+            items = []
+            while True:
+                # print(f"=====> {records.get()}")
+                items.append(records.get())
+                if records.empty():
+                    print("===记录为空===")
+                    break
 
-    items = []
-    while True:
-        items.append(q.get())
-        if q.empty():
-            break
+            print(f'进食 {eatTimes}次的行为记录->{items}')
 
-    print(f'items->{items}')
+        else :
+            print("输入错误，请输入有效数值(1<=n<=60)")
+    except Exception as ex:
+        print(f'ex->{ex}')
