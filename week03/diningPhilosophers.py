@@ -24,7 +24,6 @@ class DiningPhilosophers:
         super(DiningPhilosophers, self).__init__()
         # self.philosopher = philosopher
         self.eatTimes = eatTimes
-        # self.records = records
         self.lock = lock
         self.orders = orders
 
@@ -33,7 +32,6 @@ class DiningPhilosophers:
     # pickLeftFork 和 pickRightFork 表示拿起左边或右边的叉子。
     # eat 表示吃面。
     # putLeftFork 和 putRightFork 表示放下左边或右边的叉子。
-
     def wantsToEat(self, philosopher, pickLeftFork, pickRightFork, eat, putLeftFork, putRightFork):
         self.philosopher = philosopher
         for i in range(self.eatTimes):
