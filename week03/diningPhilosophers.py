@@ -66,7 +66,7 @@ class DiningPhilosophers:
 
 if __name__ == "__main__":
 
-    lock = [threading.Lock() for i in range(5)]
+    lock = [threading.RLock() for i in range(5)]
     orders = [sorted([i, (i+1) % 5]) for i in range(5)]
     # 输入：n = 1 （1<=n<=60，n 表示每个哲学家需要进餐的次数。）
     # eatTimes = 5
