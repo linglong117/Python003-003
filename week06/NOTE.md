@@ -19,7 +19,7 @@ https://github.com/linglong117/Python003-003/tree/master/week06
 
 ## 作业要求
 
-使用 Django 展示豆瓣电影中某个电影的短评和星级等相关信息：
+使用 息Django 展示豆瓣电影中某个电影的短评和星级等相关信：
 
 要求使用 MySQL 存储短评内容（至少 20 条）以及短评所对应的星级；
 展示高于 3 星级（不包括 3 星级）的短评内容和它对应的星级；
@@ -27,10 +27,6 @@ https://github.com/linglong117/Python003-003/tree/master/week06
 注意
 
 如果你对前端相关的技术不太熟悉，我们在页面下方提供了前端模版（frontend.zip 文件），可以直接在作业中使用。
-
-
-## 本周学习 django
-
 
 ### 复习scrapy：
 
@@ -48,10 +44,13 @@ python manage.py startapp index
 python manage.py startapp Douban
 
 python manage.py inspectdb  生成 models
+运行
 python manage.py runserver 0.0.0.0:8090
+支持搜索条件：评论人 | 评论标题 |  评论内容
 
 ## 数据库操作
 MyDjango/Douban/douban.sql 为数据库导出文件（表结构+数据）
 
 ## 引入 snowflake 生成 guid ->movieid
+ mac运行 snowflake_start_server
 

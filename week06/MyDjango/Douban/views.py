@@ -21,5 +21,7 @@ def search(request):
         error_msg = '请输入关键词'
         shorts = Moviereviews.objects.all()
         return render(request, 'result.html', locals())
-    shorts = Moviereviews.objects.filter(reviewshort__contains=q)
+    # shorts = Moviereviews.objects.filter(reviewshort__contains=q | reviewtitle__contains=q | username__contains=q)
+    shorts = Moviereviews.objects.filter(reviewshort__contains=q) |  Moviereviews.objects.filter(reviewtitle__contains=q) | Moviereviews.objects.filter(username__contains=q)
+
     return render(request, 'result.html', locals())
