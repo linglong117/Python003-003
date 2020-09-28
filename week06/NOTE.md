@@ -48,9 +48,19 @@ python manage.py inspectdb  生成 models
 python manage.py runserver 0.0.0.0:8090
 支持搜索条件：评论人 | 评论标题 |  评论内容
 
+### 问题
+chrome 浏览器下样式 navbar navbar-dark bg-dark 样式未生效
+chrome 提示找不到 maps 文件
+
+加载 jquery.slim.min.js 时提示 jquery 版本不对要小于 3，有点奇怪直接直接打开老师文件夹下的 index.html 样式 js 都能加载；集成到 django 就不行了；
+重新下载了 https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js
+根据关键搜索后页面列表样式有问题；
+
+
 ## 数据库操作
 MyDjango/Douban/douban.sql 为数据库导出文件（表结构+数据）
 
 ## 引入 snowflake 生成 guid ->movieid
  mac运行 snowflake_start_server
+
 
